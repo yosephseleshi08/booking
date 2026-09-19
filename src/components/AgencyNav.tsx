@@ -43,7 +43,7 @@ export const AgencyNav: React.FC<AgencyNavProps> = ({
           {/* Free Mockup Button */}
           <button
             onClick={onRequestMockup}
-            className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-stone-900 hover:bg-stone-800 border border-amber-500/40 text-xs font-semibold text-amber-300 hover:text-amber-200 transition-colors cursor-pointer"
+            className="inline-flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-full bg-stone-900 hover:bg-stone-800 border border-amber-500/40 text-[11px] sm:text-xs font-semibold text-amber-300 hover:text-amber-200 transition-colors cursor-pointer"
           >
             <span>🎨 Free Mockup</span>
           </button>

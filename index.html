@@ -2,10 +2,41 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <script>
+      // Prevent cross-origin iframe SecurityErrors from interrupting app execution in sandboxed previews
+      window.addEventListener('error', function(e) {
+        var msg = (e && (e.message || (e.error && e.error.message))) || '';
+        if (
+          msg.indexOf('cross-origin frame') !== -1 ||
+          msg.indexOf('Blocked a frame with origin') !== -1 ||
+          msg.indexOf('SecurityError') !== -1
+        ) {
+          e.preventDefault && e.preventDefault();
+          e.stopPropagation && e.stopPropagation();
+          e.stopImmediatePropagation && e.stopImmediatePropagation();
+          return true;
+        }
+      }, true);
+
+      window.addEventListener('unhandledrejection', function(e) {
+        var reason = e && e.reason;
+        var msg = (reason && (reason.message || (typeof reason === 'string' ? reason : ''))) || '';
+        if (
+          msg.indexOf('cross-origin frame') !== -1 ||
+          msg.indexOf('Blocked a frame with origin') !== -1 ||
+          msg.indexOf('SecurityError') !== -1 ||
+          (reason && reason.name === 'SecurityError')
+        ) {
+          e.preventDefault && e.preventDefault();
+          e.stopPropagation && e.stopPropagation();
+          e.stopImmediatePropagation && e.stopImmediatePropagation();
+        }
+      }, true);
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Atelier Dining - Bespoke Restaurant Web Design &amp; Maintenance</title>
+    <title>Atelier Dining - Restaurant Web Design &amp; Growth</title>
     <meta name="description" content="Bespoke mobile-first restaurant websites &amp; maintenance. Founding partner offer: $0 setup + $99/mo for the first 3 clients." />
-    <meta property="og:title" content="Atelier Dining - Bespoke Restaurant Web Design &amp; Maintenance" />
+    <meta property="og:title" content="Atelier Dining - Restaurant Web Design &amp; Growth" />
     <meta property="og:description" content="Bespoke mobile-first restaurant websites &amp; maintenance. Founding partner offer: $0 setup + $99/mo for the first 3 clients." />
     <meta property="og:type" content="website" />
     <meta name="twitter:card" content="summary_large_image" />

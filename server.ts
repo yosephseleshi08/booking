@@ -8,6 +8,18 @@ const PORT = 3000;
 
 app.use(express.json());
 
+// Enable CORS and iframe embedding headers for AI Studio preview environment
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, PUT, DELETE, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+  res.removeHeader('X-Frame-Options');
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(200);
+  }
+  next();
+});
+
 // Lazy-initialized Gemini AI client
 let aiClient: GoogleGenAI | null = null;
 function getGeminiClient(): GoogleGenAI | null {
@@ -240,36 +252,39 @@ app.get('/api/inquiries', (req, res) => {
 app.post('/api/inquire', (req, res) => {
   const { inquiryType, restaurantName, contactName, emailOrPhone, instagramHandle, packageTier, notes } = req.body;
   
-  // For free mockup requests, only the Instagram username/link is needed
-  if (inquiryType === 'free_mockup') {
-    if (!instagramHandle && !emailOrPhone && !restaurantName) {
-      return res.status(400).json({ error: 'Please enter your Instagram username or link.' });
-    }
-  } else {
-    if (!restaurantName || !emailOrPhone) {
-      return res.status(400).json({ error: 'Please provide restaurant name and contact info.' });
-    }
+  const rawInput = (instagramHandle || emailOrPhone || restaurantName || '').trim();
+  if (!rawInput) {
+    return res.status(400).json({ error: 'Please enter your username or profile link.' });
   }
 
-  // Derive readable name if only instagramHandle was provided
-  const derivedHandle = (instagramHandle || '').trim();
-  const cleanName = restaurantName || (derivedHandle ? derivedHandle.replace(/^https?:\/\/(www\.)?instagram\.com\//i, '').replace(/^@/, '') : 'New Restaurant');
+  // Derive clean restaurant name from handle/link if restaurantName not explicitly provided
+  let cleanName = restaurantName ? restaurantName.trim() : '';
+  if (!cleanName) {
+    const stripped = rawInput
+      .replace(/^https?:\/\/(www\.)?(instagram\.com|facebook\.com|tiktok\.com)\//i, '')
+      .replace(/\?.*$/, '')
+      .replace(/\/$/, '')
+      .replace(/^@/, '');
+    cleanName = stripped
+      ? stripped.replace(/[_\.]/g, ' ').replace(/\b\w/g, (c: string) => c.toUpperCase())
+      : 'Restaurant Partner';
+  }
 
   const newInquiry = {
     id: `inq-${Date.now()}`,
     inquiryType: inquiryType || 'package_claim',
     restaurantName: cleanName,
     contactName: contactName || '',
-    emailOrPhone: emailOrPhone || (derivedHandle ? `Instagram DM: ${derivedHandle}` : ''),
-    instagramHandle: derivedHandle,
+    emailOrPhone: emailOrPhone || `Direct: ${rawInput}`,
+    instagramHandle: rawInput,
     packageTier: packageTier || 'pilot',
     notes: notes || '',
     createdAt: new Date().toISOString(),
     status: 'new_claim'
   };
   inquiries.unshift(newInquiry);
-  console.log('New restaurant partner application received:', newInquiry);
-  res.json({ success: true, inquiry: newInquiry, message: 'Request received!' });
+  console.log('New restaurant application received:', newInquiry);
+  res.json({ success: true, inquiry: newInquiry, message: 'Request received successfully!' });
 });
 
 app.patch('/api/inquiries/:id', (req, res) => {

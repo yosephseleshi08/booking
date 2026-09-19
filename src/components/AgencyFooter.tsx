@@ -8,7 +8,11 @@ interface AgencyFooterProps {
 
 export const AgencyFooter: React.FC<AgencyFooterProps> = ({ onOpenInquiry, onOpenDeals }) => {
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    try {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } catch {
+      // Ignore in restricted iframe contexts
+    }
   };
 
   return (

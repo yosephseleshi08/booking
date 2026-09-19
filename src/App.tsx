@@ -8,10 +8,11 @@ import { ComparisonSection } from './components/ComparisonSection';
 import { AgencyFaq } from './components/AgencyFaq';
 import { AgencyFooter } from './components/AgencyFooter';
 import { InquiryModal } from './components/InquiryModal';
+import { FreeMockupModal } from './components/FreeMockupModal';
 import { DealsInboxDrawer } from './components/DealsInboxDrawer';
-import { PackageTier, DealInquiry, AgencyOwnerProfile, InquiryType } from './types';
+import { PackageTier, DealInquiry, AgencyOwnerProfile } from './types';
 import { PACKAGES } from './data/packages';
-import { Flame, Clock, X, ArrowRight, Palette } from 'lucide-react';
+import { Flame, X, ArrowRight, Palette } from 'lucide-react';
 
 const DEFAULT_PROFILE: AgencyOwnerProfile = {
   agencyName: 'Atelier Dining',
@@ -22,8 +23,8 @@ const DEFAULT_PROFILE: AgencyOwnerProfile = {
 };
 
 export default function App() {
-  const [isInquiryOpen, setIsInquiryOpen] = useState(false);
-  const [inquiryMode, setInquiryMode] = useState<InquiryType>('package_claim');
+  const [isPackageClaimOpen, setIsPackageClaimOpen] = useState(false);
+  const [isMockupModalOpen, setIsMockupModalOpen] = useState(false);
   const [initialMockupHandle, setInitialMockupHandle] = useState('');
   const [isDealsOpen, setIsDealsOpen] = useState(false);
   const [selectedTier, setSelectedTier] = useState<PackageTier>('pilot');
@@ -44,11 +45,11 @@ export default function App() {
         id: 'sample-1',
         inquiryType: 'free_mockup',
         restaurantName: 'Trattoria Bella Napoli',
-        contactName: 'Chef Giovanni (Owner)',
-        emailOrPhone: '+1 (555) 234-8910',
+        contactName: '',
+        emailOrPhone: 'Instagram: @trattoria_bellanapoli',
         instagramHandle: '@trattoria_bellanapoli',
         packageTier: 'pilot',
-        notes: 'We have a paper menu we need digitized. Sent photos via Instagram!',
+        notes: 'Requested free mobile menu mockup',
         createdAt: new Date(Date.now() - 3600000 * 2).toISOString(),
         status: 'new_claim',
       },
@@ -71,9 +72,14 @@ export default function App() {
   // Fetch inquiries from server
   useEffect(() => {
     fetch('/api/inquiries')
-      .then((res) => res.json())
+      .then((res) => {
+        if (res.ok && res.headers.get('content-type')?.includes('application/json')) {
+          return res.json();
+        }
+        return null;
+      })
       .then((data) => {
-        if (data.inquiries && Array.isArray(data.inquiries) && data.inquiries.length > 0) {
+        if (data && data.inquiries && Array.isArray(data.inquiries) && data.inquiries.length > 0) {
           setInquiries((prev) => {
             const combined = [...data.inquiries];
             prev.forEach((p) => {
@@ -99,16 +105,20 @@ export default function App() {
     localStorage.setItem('atelier_owner_profile', JSON.stringify(ownerProfile));
   }, [ownerProfile]);
 
-  const handleOpenInquiry = (tier: PackageTier = 'pilot') => {
-    setSelectedTier(tier);
-    setInquiryMode('package_claim');
-    setIsInquiryOpen(true);
+  const handleOpenInquiry = (tier?: unknown) => {
+    const validTiers: PackageTier[] = ['pilot', 'growth', 'premium'];
+    const safeTier =
+      typeof tier === 'string' && validTiers.includes(tier as PackageTier)
+        ? (tier as PackageTier)
+        : 'pilot';
+    setSelectedTier(safeTier);
+    setIsPackageClaimOpen(true);
   };
 
-  const handleRequestMockup = (handle?: string) => {
-    setInquiryMode('free_mockup');
-    setInitialMockupHandle(handle || '');
-    setIsInquiryOpen(true);
+  const handleRequestMockup = (handle?: unknown) => {
+    const safeHandle = typeof handle === 'string' ? handle : '';
+    setInitialMockupHandle(safeHandle);
+    setIsMockupModalOpen(true);
   };
 
   const handleInquiryCreated = (inquiry: DealInquiry) => {
@@ -168,7 +178,7 @@ export default function App() {
             </p>
             <p className="text-xs text-stone-300">
               {newDealAlert.inquiryType === 'free_mockup'
-                ? `Requested Free Custom Preview • Instagram: ${newDealAlert.instagramHandle || 'N/A'}`
+                ? `Free Custom Preview • Instagram: ${newDealAlert.instagramHandle || 'N/A'}`
                 : `Claimed: ${PACKAGES[newDealAlert.packageTier]?.name} • Contact: ${newDealAlert.emailOrPhone}`}
             </p>
             <div className="pt-2 flex items-center gap-2">
@@ -201,8 +211,12 @@ export default function App() {
           onRequestMockup={handleRequestMockup}
         />
 
-        {/* 100% Free Custom Mockup Banner */}
-        <FreeMockupBanner onRequestMockup={handleRequestMockup} />
+        {/* 100% Free Custom Mockup Banner with Direct 1-Field Submission */}
+        <FreeMockupBanner
+          onInquiryCreated={handleInquiryCreated}
+          onRequestMockup={handleRequestMockup}
+          ownerProfile={ownerProfile}
+        />
 
         {/* Live Interactive Mobile Prototype Simulator */}
         <InteractiveSimulator />
@@ -220,15 +234,26 @@ export default function App() {
         onOpenDeals={() => setIsDealsOpen(true)}
       />
 
-      {/* Spot Reservation / Application Modal with Direct DM handoff */}
-      <InquiryModal
-        isOpen={isInquiryOpen}
-        onClose={() => setIsInquiryOpen(false)}
-        initialTier={selectedTier}
-        initialMode={inquiryMode}
-        initialMockupHandle={initialMockupHandle}
+      {/* Ultra-Simple Free Mockup Modal (Only Instagram Username or Link) */}
+      <FreeMockupModal
+        isOpen={isMockupModalOpen}
+        onClose={() => setIsMockupModalOpen(false)}
+        initialHandle={initialMockupHandle}
         ownerProfile={ownerProfile}
         onInquiryCreated={handleInquiryCreated}
+      />
+
+      {/* Spot Reservation / Application Modal for Tier Claims */}
+      <InquiryModal
+        isOpen={isPackageClaimOpen}
+        onClose={() => setIsPackageClaimOpen(false)}
+        initialTier={selectedTier}
+        ownerProfile={ownerProfile}
+        onInquiryCreated={handleInquiryCreated}
+        onSwitchToMockup={() => {
+          setIsPackageClaimOpen(false);
+          setIsMockupModalOpen(true);
+        }}
       />
 
       {/* Owner Deals Inbox & Notifications Drawer */}

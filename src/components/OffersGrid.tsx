@@ -283,7 +283,7 @@ export const OffersGrid: React.FC<OffersGridProps> = ({ onSelectTier, onRequestM
                 <span>Want to test our craftsmanship first?</span>
               </div>
               <p className="text-sm text-stone-300">
-                Request a <strong className="text-white">Free Custom Mobile Mockup</strong> of your restaurant’s menu. We design it with zero obligation in 24–48h.
+                Request a <strong className="text-white">Free Custom Mobile Mockup</strong>. Only need your Instagram username or link — zero obligation, delivered in 24–48h.
               </p>
             </div>
 

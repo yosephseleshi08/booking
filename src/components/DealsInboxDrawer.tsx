@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { X, Check, MessageCircle, Phone, Mail, Instagram, Clock, ExternalLink, Copy, CheckCircle2, Flame, Building2, User, FileText, Settings, Palette, Sparkles, Send } from 'lucide-react';
 import { DealInquiry, AgencyOwnerProfile, PackageTier } from '../types';
 import { PACKAGES } from '../data/packages';
+import { parseProfileInput } from '../utils/profileParser';
 
 interface DealsInboxDrawerProps {
   isOpen: boolean;
@@ -29,7 +30,35 @@ export const DealsInboxDrawer: React.FC<DealsInboxDrawerProps> = ({
 
   if (!isOpen) return null;
 
-  const handleCopyDeal = (inq: DealInquiry) => {
+  const safeCopyToClipboard = async (text: string): Promise<boolean> => {
+    try {
+      if (typeof navigator !== 'undefined' && navigator.clipboard && navigator.clipboard.writeText) {
+        await navigator.clipboard.writeText(text);
+        return true;
+      }
+    } catch {
+      // Fallback below
+    }
+
+    try {
+      const textArea = document.createElement('textarea');
+      textArea.value = text;
+      textArea.style.position = 'fixed';
+      textArea.style.left = '-9999px';
+      textArea.style.top = '-9999px';
+      textArea.setAttribute('readonly', '');
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      const successful = document.execCommand('copy');
+      document.body.removeChild(textArea);
+      return successful;
+    } catch {
+      return false;
+    }
+  };
+
+  const handleCopyDeal = async (inq: DealInquiry) => {
     const pkg = PACKAGES[inq.packageTier];
     const isMockup = inq.inquiryType === 'free_mockup';
     const text = isMockup
@@ -49,12 +78,12 @@ Guarantee: Live Within 48 Hours
 Notes: ${inq.notes || 'None'}
 Claimed: ${new Date(inq.createdAt).toLocaleString()}`;
 
-    navigator.clipboard.writeText(text);
+    await safeCopyToClipboard(text);
     setCopiedId(inq.id);
     setTimeout(() => setCopiedId(null), 2000);
   };
 
-  const handleCopyMockupScript = (inq: DealInquiry) => {
+  const handleCopyMockupScript = async (inq: DealInquiry) => {
     const name = inq.contactName || 'there';
     const script = `Hey ${name}! 👋 This is ${ownerProfile.agencyName}. I just finished designing the free custom mobile website mockup for ${inq.restaurantName}! 🍽️
 
@@ -63,7 +92,7 @@ Take a quick look at how your new mobile menu and ordering look here:
 
 If you'd like us to launch it live taking orders with 0% commission, we have our $0 setup Founding Partner spot ready for you. Let me know what you think!`;
 
-    navigator.clipboard.writeText(script);
+    await safeCopyToClipboard(script);
     setCopiedScriptId(inq.id);
     setTimeout(() => setCopiedScriptId(null), 2000);
   };
@@ -194,12 +223,8 @@ If you'd like us to launch it live taking orders with 0% commission, we have our
               filteredInquiries.map((inq) => {
                 const pkg = PACKAGES[inq.packageTier] || PACKAGES.pilot;
                 const isMockup = inq.inquiryType === 'free_mockup';
-                const cleanHandle = (inq.instagramHandle || '')
-                  .replace(/^https?:\/\/(www\.)?instagram\.com\//i, '')
-                  .replace(/^@/, '')
-                  .replace(/\/$/, '')
-                  .trim();
-                const igUrl = cleanHandle ? `https://instagram.com/${cleanHandle}` : null;
+                const parsedLead = parseProfileInput(inq.instagramHandle || inq.emailOrPhone || '');
+                const igUrl = parsedLead.directUrl || (inq.instagramHandle?.startsWith('http') ? inq.instagramHandle : null);
                 const telUrl = inq.emailOrPhone && inq.emailOrPhone.match(/[0-9]{4,}/) ? `tel:${inq.emailOrPhone.replace(/[^0-9+]/g, '')}` : null;
 
                 return (
