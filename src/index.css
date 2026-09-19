@@ -1,0 +1,27 @@
+@import "tailwindcss";
+
+@layer utilities {
+  @media print {
+    body * {
+      visibility: hidden;
+    }
+    #printable-invoice, #printable-invoice * {
+      visibility: visible;
+    }
+    #printable-invoice {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      margin: 0;
+      padding: 20px;
+      box-shadow: none !important;
+      border: 1px solid #e5e7eb !important;
+      background: white !important;
+      color: #111827 !important;
+    }
+    .no-print {
+      display: none !important;
+    }
+  }
+}
