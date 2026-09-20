@@ -39,20 +39,23 @@ export const OffersGrid: React.FC<OffersGridProps> = ({ onSelectTier, onRequestM
             <div className="space-y-6 pt-2">
               <div>
                 <h3 className="text-2xl font-bold text-white font-serif">{PACKAGES.pilot.name}</h3>
+                <div className="text-sm font-bold text-amber-400 font-mono mt-1">
+                  {PACKAGES.pilot.pricingHeader} <span className="text-xs text-stone-400 line-through font-sans">(${PACKAGES.pilot.originalSetupFee} setup)</span>
+                </div>
                 <p className="text-xs text-amber-300 font-medium mt-1">{PACKAGES.pilot.tagline}</p>
                 <p className="text-xs text-stone-400 mt-2 leading-relaxed">{PACKAGES.pilot.description}</p>
               </div>
 
               {/* Price Block */}
               <div className="p-4 rounded-2xl bg-stone-950/80 border border-amber-500/30 space-y-1">
-                <div className="flex items-baseline gap-2">
-                  <span className="text-4xl font-extrabold text-amber-400 font-serif">$0</span>
+                <div className="flex flex-wrap items-baseline gap-2">
+                  <span className="text-3xl sm:text-4xl font-extrabold text-amber-400 font-serif">$0</span>
                   <span className="text-sm text-stone-400 line-through font-medium">
                     ${PACKAGES.pilot.originalSetupFee} setup
                   </span>
                   <span className="text-stone-500 text-sm font-semibold">+</span>
-                  <span className="text-2xl font-bold text-white font-serif">$99</span>
-                  <span className="text-xs text-stone-400 font-medium">/month</span>
+                  <span className="text-2xl sm:text-3xl font-bold text-white font-serif">${PACKAGES.pilot.monthlyFee}</span>
+                  <span className="text-sm text-stone-300 font-medium">/month</span>
                 </div>
                 <div className="text-[11px] text-amber-200/90 font-medium flex items-center gap-1 pt-1">
                   <Check className="w-3.5 h-3.5 text-amber-400" />
@@ -122,18 +125,21 @@ export const OffersGrid: React.FC<OffersGridProps> = ({ onSelectTier, onRequestM
             <div className="space-y-6 pt-2">
               <div>
                 <h3 className="text-2xl font-bold text-white font-serif">{PACKAGES.growth.name}</h3>
+                <div className="text-sm font-bold text-amber-400 font-mono mt-1">
+                  {PACKAGES.growth.pricingHeader}
+                </div>
                 <p className="text-xs text-stone-300 font-medium mt-1">{PACKAGES.growth.tagline}</p>
                 <p className="text-xs text-stone-400 mt-2 leading-relaxed">{PACKAGES.growth.description}</p>
               </div>
 
               {/* Price Block */}
               <div className="p-4 rounded-2xl bg-stone-950/80 border border-stone-800 space-y-1">
-                <div className="flex items-baseline gap-2">
-                  <span className="text-4xl font-extrabold text-white font-serif">$299</span>
-                  <span className="text-xs text-stone-400 font-medium">setup</span>
-                  <span className="text-stone-500 text-sm font-semibold">+</span>
-                  <span className="text-2xl font-bold text-white font-serif">$99</span>
-                  <span className="text-xs text-stone-400 font-medium">/month</span>
+                <div className="flex flex-wrap items-baseline gap-2">
+                  <span className="text-3xl sm:text-4xl font-extrabold text-amber-400 font-serif">${PACKAGES.growth.setupFee}</span>
+                  <span className="text-sm text-stone-300 font-semibold">setup</span>
+                  <span className="text-stone-500 text-sm font-bold">+</span>
+                  <span className="text-2xl sm:text-3xl font-bold text-white font-serif">${PACKAGES.growth.monthlyFee}</span>
+                  <span className="text-sm text-stone-300 font-medium">/month</span>
                 </div>
                 <div className="text-[11px] text-stone-400 font-medium flex items-center gap-1 pt-1">
                   <Check className="w-3.5 h-3.5 text-emerald-400" />
@@ -203,18 +209,21 @@ export const OffersGrid: React.FC<OffersGridProps> = ({ onSelectTier, onRequestM
             <div className="space-y-6 pt-2">
               <div>
                 <h3 className="text-2xl font-bold text-white font-serif">{PACKAGES.premium.name}</h3>
+                <div className="text-sm font-bold text-amber-400 font-mono mt-1">
+                  {PACKAGES.premium.pricingHeader}
+                </div>
                 <p className="text-xs text-stone-300 font-medium mt-1">{PACKAGES.premium.tagline}</p>
                 <p className="text-xs text-stone-400 mt-2 leading-relaxed">{PACKAGES.premium.description}</p>
               </div>
 
               {/* Price Block */}
               <div className="p-4 rounded-2xl bg-stone-950/80 border border-stone-800 space-y-1">
-                <div className="flex items-baseline gap-2">
-                  <span className="text-4xl font-extrabold text-white font-serif">$499</span>
-                  <span className="text-xs text-stone-400 font-medium">setup</span>
-                  <span className="text-stone-500 text-sm font-semibold">+</span>
-                  <span className="text-2xl font-bold text-white font-serif">$149</span>
-                  <span className="text-xs text-stone-400 font-medium">/month</span>
+                <div className="flex flex-wrap items-baseline gap-2">
+                  <span className="text-3xl sm:text-4xl font-extrabold text-amber-400 font-serif">${PACKAGES.premium.setupFee}</span>
+                  <span className="text-sm text-stone-300 font-semibold">setup</span>
+                  <span className="text-stone-500 text-sm font-bold">+</span>
+                  <span className="text-2xl sm:text-3xl font-bold text-white font-serif">${PACKAGES.premium.monthlyFee}</span>
+                  <span className="text-sm text-stone-300 font-medium">/month</span>
                 </div>
                 <div className="text-[11px] text-stone-400 font-medium flex items-center gap-1 pt-1">
                   <Check className="w-3.5 h-3.5 text-purple-400" />

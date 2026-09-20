@@ -10,6 +10,7 @@ export interface PackageOffer {
   setupFee: number;
   originalSetupFee: number;
   monthlyFee: number;
+  pricingHeader: string;
   tagline: string;
   description: string;
   idealFor: string;

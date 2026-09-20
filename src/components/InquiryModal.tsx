@@ -133,7 +133,7 @@ export const InquiryModal: React.FC<InquiryModalProps> = ({
               <div className="text-stone-300 leading-relaxed">
                 We received your claim for the{' '}
                 <strong className="text-white">{currentPkg.name}</strong> package (
-                {currentPkg.setupFee === 0 ? '$0 Setup + $99/mo' : `$${currentPkg.setupFee} + $${currentPkg.monthlyFee}/mo`}
+                <strong className="text-amber-400">{currentPkg.pricingHeader}</strong>
                 ) using handle <strong className="text-amber-300 font-mono">{submittedProfile?.cleanHandle}</strong>.
               </div>
 
@@ -211,7 +211,7 @@ export const InquiryModal: React.FC<InquiryModalProps> = ({
                   >
                     <div className="text-[11px] truncate">{pkg.name.split(' ')[0]}</div>
                     <div className="text-[10px] opacity-90 truncate">
-                      {pkg.setupFee === 0 ? '$0 Setup' : `$${pkg.setupFee}`}
+                      {pkg.setupFee === 0 ? '$0 Setup' : `$${pkg.setupFee} Setup`}
                     </div>
                   </button>
                 );
@@ -231,10 +231,10 @@ export const InquiryModal: React.FC<InquiryModalProps> = ({
 
               <div className="text-right shrink-0">
                 <div className="text-sm font-bold text-amber-400 font-serif">
-                  {currentPkg.setupFee === 0 ? '$0 Setup' : `$${currentPkg.setupFee}`}
+                  {currentPkg.pricingHeader}
                 </div>
                 <div className="text-[10px] text-stone-400 font-medium">
-                  + ${currentPkg.monthlyFee}/mo
+                  Guaranteed live in 48 hours
                 </div>
               </div>
             </div>

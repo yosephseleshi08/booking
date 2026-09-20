@@ -73,7 +73,7 @@ Requested: ${new Date(inq.createdAt).toLocaleString()}`
 Restaurant: ${inq.restaurantName}
 Contact: ${inq.contactName} (${inq.emailOrPhone})
 Instagram: ${inq.instagramHandle || 'N/A'}
-Selected Package: ${pkg.name} (${pkg.setupFee === 0 ? '$0 Setup + $99/mo' : `$${pkg.setupFee} + $${pkg.monthlyFee}/mo`})
+Selected Package: ${pkg.name} (${pkg.pricingHeader})
 Guarantee: Live Within 48 Hours
 Notes: ${inq.notes || 'None'}
 Claimed: ${new Date(inq.createdAt).toLocaleString()}`;
@@ -284,7 +284,7 @@ If you'd like us to launch it live taking orders with 0% commission, we have our
                               {pkg.name}
                             </span>
                             <div className="text-[11px] text-stone-400 mt-1">
-                              {pkg.setupFee === 0 ? '$0 Setup + $99/mo' : `$${pkg.setupFee} + $${pkg.monthlyFee}/mo`}
+                              {pkg.pricingHeader}
                             </div>
                           </>
                         )}
