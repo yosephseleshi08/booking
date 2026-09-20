@@ -4,7 +4,7 @@ export const PACKAGES: Record<PackageTier, PackageOffer> = {
   pilot: {
     id: 'pilot',
     name: 'Founding Partner',
-    badge: 'First 3 Clients Only • 1 Spot Left',
+    badge: 'First 3 Clients Only',
     isFounding: true,
     setupFee: 0,
     originalSetupFee: 499,

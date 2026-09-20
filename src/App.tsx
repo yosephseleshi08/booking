@@ -15,9 +15,9 @@ import { PACKAGES } from './data/packages';
 import { Flame, X, ArrowRight, Palette } from 'lucide-react';
 
 const DEFAULT_PROFILE: AgencyOwnerProfile = {
-  agencyName: 'Atelier Dining',
-  ownerName: 'Freelance Studio',
-  instagramHandle: '@atelierdining',
+  agencyName: 'Ridge Creative',
+  ownerName: 'Ridge Creative Web Studio',
+  instagramHandle: '@ridgecreative',
   whatsappNumber: '+1 555-234-8910',
   notificationEmail: 'yosephseleshi08@gmail.com',
 };
@@ -32,7 +32,7 @@ export default function App() {
 
   // Inquiries State
   const [inquiries, setInquiries] = useState<DealInquiry[]>(() => {
-    const saved = localStorage.getItem('atelier_inquiries');
+    const saved = localStorage.getItem('ridge_inquiries') || localStorage.getItem('atelier_inquiries');
     if (saved) {
       try {
         return JSON.parse(saved);
@@ -58,10 +58,20 @@ export default function App() {
 
   // Owner profile settings
   const [ownerProfile, setOwnerProfile] = useState<AgencyOwnerProfile>(() => {
-    const saved = localStorage.getItem('atelier_owner_profile');
+    const saved = localStorage.getItem('ridge_owner_profile') || localStorage.getItem('atelier_owner_profile');
     if (saved) {
       try {
-        return JSON.parse(saved);
+        const parsed = JSON.parse(saved);
+        if (parsed.agencyName === 'Atelier Dining' || !parsed.agencyName) {
+          parsed.agencyName = 'Ridge Creative';
+        }
+        if (parsed.instagramHandle === '@atelierdining' || !parsed.instagramHandle) {
+          parsed.instagramHandle = '@ridgecreative';
+        }
+        if (parsed.ownerName === 'Freelance Studio') {
+          parsed.ownerName = 'Ridge Creative Web Studio';
+        }
+        return parsed;
       } catch {
         // fallback
       }
@@ -98,11 +108,11 @@ export default function App() {
 
   // Save to local storage
   useEffect(() => {
-    localStorage.setItem('atelier_inquiries', JSON.stringify(inquiries));
+    localStorage.setItem('ridge_inquiries', JSON.stringify(inquiries));
   }, [inquiries]);
 
   useEffect(() => {
-    localStorage.setItem('atelier_owner_profile', JSON.stringify(ownerProfile));
+    localStorage.setItem('ridge_owner_profile', JSON.stringify(ownerProfile));
   }, [ownerProfile]);
 
   const handleOpenInquiry = (tier?: unknown) => {
@@ -218,8 +228,11 @@ export default function App() {
           ownerProfile={ownerProfile}
         />
 
-        {/* Live Interactive Mobile Prototype Simulator */}
-        <InteractiveSimulator />
+        {/* Live Interactive Mobile Prototype Simulator with Real HTML Engine */}
+        <InteractiveSimulator
+          onRequestMockup={handleRequestMockup}
+          onOpenInquiry={handleOpenInquiry}
+        />
 
         {/* Value Comparison Section */}
         <ComparisonSection />

@@ -53,11 +53,11 @@ export const ComparisonSection: React.FC = () => {
             </ul>
           </div>
 
-          {/* The Atelier Way */}
+          {/* The Ridge Creative Way */}
           <div className="p-6 sm:p-8 rounded-3xl bg-gradient-to-b from-stone-900 to-stone-950 border border-amber-500/40 shadow-xl space-y-4">
             <div className="flex items-center gap-2 text-amber-400 font-bold text-sm">
               <ShieldCheck className="w-4 h-4" />
-              <span>The Atelier Dining Standard</span>
+              <span>The Ridge Creative Standard</span>
             </div>
 
             <ul className="space-y-3 text-xs sm:text-sm text-stone-300">

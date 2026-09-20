@@ -1,5 +1,6 @@
 import React from 'react';
-import { UtensilsCrossed, Sparkles, ArrowRight, Flame, Zap } from 'lucide-react';
+import { Sparkles, ArrowRight, Flame, Zap } from 'lucide-react';
+import { RidgeLogo } from './RidgeLogo';
 
 interface AgencyNavProps {
   onOpenInquiry: (tier?: 'pilot' | 'growth' | 'premium') => void;
@@ -19,21 +20,19 @@ export const AgencyNav: React.FC<AgencyNavProps> = ({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
         {/* Brand identity */}
         <a href="#hero" className="flex items-center gap-3 group">
-          <div className="w-9 h-9 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-400 flex items-center justify-center transition-colors group-hover:bg-amber-500 group-hover:text-stone-950">
-            <UtensilsCrossed className="w-4 h-4" />
-          </div>
+          <RidgeLogo variant="mark" size="md" className="transition-transform group-hover:scale-105" />
           <div>
             <div className="flex items-center gap-2">
-              <span className="text-base font-bold tracking-tight text-white font-serif">
-                Atelier Dining
+              <span className="text-base font-extrabold tracking-[0.14em] text-transparent bg-clip-text bg-gradient-to-r from-amber-100 via-amber-300 to-amber-400 uppercase">
+                Ridge Creative
               </span>
               <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/15 text-amber-300 border border-amber-500/30">
                 <Zap className="w-2.5 h-2.5 fill-amber-400" />
                 <span>48h Launch</span>
               </span>
             </div>
-            <p className="text-[11px] text-stone-400 hidden md:block">
-              Bespoke Web Design &amp; Maintenance for Restaurants
+            <p className="text-[10px] tracking-[0.15em] text-amber-400/80 uppercase font-semibold hidden md:block">
+              Web Studio • Dining &amp; Hospitality
             </p>
           </div>
         </a>

@@ -1,5 +1,6 @@
 import React from 'react';
-import { UtensilsCrossed, ArrowUp, Instagram, Mail, Phone, Heart } from 'lucide-react';
+import { ArrowUp, Instagram, Mail, Phone, Heart } from 'lucide-react';
+import { RidgeLogo } from './RidgeLogo';
 
 interface AgencyFooterProps {
   onOpenInquiry: () => void;
@@ -20,16 +21,9 @@ export const AgencyFooter: React.FC<AgencyFooterProps> = ({ onOpenInquiry, onOpe
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 pb-8 border-b border-stone-850">
           <div className="space-y-2">
-            <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-lg bg-amber-500/10 text-amber-400 flex items-center justify-center font-bold">
-                <UtensilsCrossed className="w-4 h-4" />
-              </div>
-              <span className="text-base font-bold text-white font-serif tracking-tight">
-                Atelier Dining Studio
-              </span>
-            </div>
-            <p className="text-xs text-stone-400 max-w-sm">
-              Custom web design, direct online ordering, and high-speed maintenance tailored exclusively for independent dining spots. All sites live within 48 hours.
+            <RidgeLogo variant="horizontal" size="md" />
+            <p className="text-xs text-stone-400 max-w-sm pt-1">
+              Custom web design, direct online ordering, and high-speed maintenance tailored exclusively for independent restaurants and dining spots. All sites live within 48 hours.
             </p>
           </div>
 
@@ -44,13 +38,13 @@ export const AgencyFooter: React.FC<AgencyFooterProps> = ({ onOpenInquiry, onOpe
             )}
             <button
               onClick={() => onOpenInquiry()}
-              className="px-5 py-2.5 bg-amber-400 hover:bg-amber-300 text-stone-950 font-bold rounded-xl text-xs transition-colors"
+              className="px-5 py-2.5 bg-amber-400 hover:bg-amber-300 text-stone-950 font-bold rounded-xl text-xs transition-colors cursor-pointer"
             >
               Apply as Founding Partner
             </button>
             <button
               onClick={scrollToTop}
-              className="p-2.5 rounded-xl bg-stone-900 hover:bg-stone-800 text-stone-300 hover:text-white border border-stone-800 transition-colors"
+              className="p-2.5 rounded-xl bg-stone-900 hover:bg-stone-800 text-stone-300 hover:text-white border border-stone-800 transition-colors cursor-pointer"
               title="Back to top"
             >
               <ArrowUp className="w-4 h-4" />
@@ -60,7 +54,7 @@ export const AgencyFooter: React.FC<AgencyFooterProps> = ({ onOpenInquiry, onOpe
 
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-stone-500 text-[11px]">
           <div>
-            © {new Date().getFullYear()} Atelier Dining. All rights reserved. First 3 client founding offer.
+            © {new Date().getFullYear()} Ridge Creative Web Studio. All rights reserved. First 3 client founding offer.
           </div>
           <div className="flex items-center gap-4">
             <span>Month-to-Month</span>

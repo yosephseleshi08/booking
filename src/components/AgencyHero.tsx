@@ -16,7 +16,7 @@ export const AgencyHero: React.FC<AgencyHeroProps> = ({ onOpenInquiry, onRequest
         {/* Eyebrow badge */}
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-stone-900/90 border border-amber-500/30 text-amber-300 text-xs font-medium shadow-xs">
           <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-          <span>⚡ All Packages Live Within 48 Hours • First 3 Clients $0 Setup</span>
+          <span>⚡ Ridge Creative • All Packages Live Within 48 Hours • First 3 Clients $0 Setup</span>
         </div>
 
         {/* High-agency headline */}
@@ -40,9 +40,6 @@ export const AgencyHero: React.FC<AgencyHeroProps> = ({ onOpenInquiry, onRequest
               <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
               <span>Founding Partner Offer — First 3 Clients Only</span>
             </div>
-            <span className="px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 text-[11px] font-bold border border-amber-500/30">
-              1 of 3 Spots Remaining
-            </span>
           </div>
 
           <p className="text-xs sm:text-sm text-stone-300 leading-relaxed">

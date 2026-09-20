@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 220" fill="none">
+  <defs>
+    <linearGradient id="ridgeGold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FDE68A" />
+      <stop offset="35%" stop-color="#F59E0B" />
+      <stop offset="70%" stop-color="#D97706" />
+      <stop offset="100%" stop-color="#B45309" />
+    </linearGradient>
+    <linearGradient id="ridgeGoldLight" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#FEF3C7" />
+      <stop offset="50%" stop-color="#FBBF24" />
+      <stop offset="100%" stop-color="#F59E0B" />
+    </linearGradient>
+  </defs>
+
+  <!-- Mountain Crest Emblem -->
+  <g id="crest">
+    <!-- Outer Crest with Mountain Peaks and Interior Facet Cuts -->
+    <path d="M 40 135 L 40 86 L 70 54 L 84 66 L 120 22 L 146 54 L 164 36 L 200 86 L 200 135 Z" fill="url(#ridgeGold)" />
+    <!-- Stylized Geometric Facet Chasm Cuts (Dark Shadow Carving) -->
+    <path d="M 120 28 L 112 70 L 96 100 L 108 94 L 88 126 L 80 126 L 102 88 L 88 94 L 110 52 Z" fill="#0C0A09" />
+    <path d="M 146 58 L 132 88 L 124 108 L 132 104 L 116 128 L 108 128 L 124 96 L 116 100 L 136 68 Z" fill="#0C0A09" />
+  </g>
+
+  <!-- Typography -->
+  <text x="120" y="172" text-anchor="middle" font-family="'Plus Jakarta Sans', system-ui, -apple-system, sans-serif" font-size="20" font-weight="800" letter-spacing="3.5" fill="url(#ridgeGoldLight)">
+    RIDGE CREATIVE
+  </text>
+  <text x="120" y="196" text-anchor="middle" font-family="'Plus Jakarta Sans', system-ui, -apple-system, sans-serif" font-size="11" font-weight="600" letter-spacing="5" fill="#FBBF24">
+    WEB STUDIO
+  </text>
+</svg>

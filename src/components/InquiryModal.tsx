@@ -82,7 +82,7 @@ export const InquiryModal: React.FC<InquiryModalProps> = ({
     }
   };
 
-  const cleanOwnerHandle = ownerProfile.instagramHandle.replace(/^@/, '') || 'atelierdining';
+  const cleanOwnerHandle = ownerProfile.instagramHandle.replace(/^@/, '') || 'ridgecreative';
   const cleanPhone = ownerProfile.whatsappNumber.replace(/[^0-9]/g, '') || '15552348910';
 
   const restaurantDisplayName = submittedProfile?.restaurantName || createdInquiry?.restaurantName || 'Restaurant';
@@ -223,11 +223,6 @@ export const InquiryModal: React.FC<InquiryModalProps> = ({
               <div>
                 <div className="flex items-center gap-1.5">
                   <span className="text-xs font-bold text-white">{currentPkg.name}</span>
-                  {currentPkg.setupFee === 0 && (
-                    <span className="px-1.5 py-0.2 rounded-full text-[9px] font-bold bg-amber-500 text-stone-950">
-                      1 of 3 Remaining
-                    </span>
-                  )}
                 </div>
                 <p className="text-[11px] text-stone-400 mt-0.5">
                   {currentPkg.tagline} • Live within 48h

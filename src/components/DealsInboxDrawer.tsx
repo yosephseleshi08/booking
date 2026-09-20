@@ -431,7 +431,7 @@ If you'd like us to launch it live taking orders with 0% commission, we have our
                   type="text"
                   value={localProfile.agencyName}
                   onChange={(e) => setLocalProfile({ ...localProfile, agencyName: e.target.value })}
-                  placeholder="Atelier Dining"
+                  placeholder="Ridge Creative"
                   className="w-full px-3 py-2 rounded-xl bg-stone-950 border border-stone-800 text-xs text-white placeholder-stone-600 focus:outline-hidden focus:border-amber-400"
                 />
               </div>

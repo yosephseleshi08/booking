@@ -72,7 +72,7 @@ export const FreeMockupModal: React.FC<FreeMockupModalProps> = ({
     }
   };
 
-  const cleanOwnerHandle = ownerProfile.instagramHandle.replace(/^@/, '') || 'atelierdining';
+  const cleanOwnerHandle = ownerProfile.instagramHandle.replace(/^@/, '') || 'ridgecreative';
   const directInstagramUrl = `https://instagram.com/${cleanOwnerHandle}`;
 
   return (
