@@ -13,7 +13,7 @@ const FAQS: FaqItem[] = [
   },
   {
     q: 'How does the Free Mockup work if I want to see our design first?',
-    a: 'Simply tap "Request Free Mockup" and provide just your Instagram username or profile link. No phone number, email, or credit card required. We will review your food photos, craft a bespoke mobile homepage mockup, and send you the private preview link directly via Instagram DM within 24–48 hours. If you love it, you can activate your site for $0 setup + $99/mo. If not, it costs you nothing.',
+    a: 'Simply tap "Request Free Mockup" and provide your Instagram, TikTok, Facebook, or Google Maps link. No phone number or credit card required. We will review your food photos and reviews, craft a bespoke mobile menu and website mockup, and send you the private preview link within 24–48 hours. If you love it, you can activate your site for $0 setup + $99/mo. If not, it costs you nothing.',
   },
   {
     q: 'Are there any long-term contracts or hidden lock-ins?',
@@ -41,8 +41,8 @@ export const AgencyFaq: React.FC = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <section className="py-16 sm:py-24 bg-stone-900/60 border-t border-stone-800/80 text-stone-100">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+    <section className="py-12 sm:py-20 bg-stone-900/60 border-t border-stone-800/80 text-stone-100 w-full max-w-full overflow-hidden">
+      <div className="max-w-4xl mx-auto px-3.5 sm:px-6 lg:px-8 space-y-8 sm:space-y-10">
         <div className="text-center space-y-3">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-stone-800 text-stone-300 border border-stone-700">
             <HelpCircle className="w-3.5 h-3.5 text-amber-400" />

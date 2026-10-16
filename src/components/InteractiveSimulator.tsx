@@ -297,7 +297,7 @@ export const InteractiveSimulator: React.FC<InteractiveSimulatorProps> = ({
       {/* Background ambient glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-amber-500/5 rounded-full blur-3xl pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12 relative z-10">
+      <div className="max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8 space-y-10 sm:space-y-12 relative z-10 w-full max-w-full">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto space-y-3">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-bold bg-amber-500/10 text-amber-300 border border-amber-500/25">
@@ -305,23 +305,23 @@ export const InteractiveSimulator: React.FC<InteractiveSimulatorProps> = ({
             <span>Live Interactive Mobile Prototype</span>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white font-serif">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-white font-serif">
             Experience the Exact Website Diners Interact With
           </h2>
 
-          <p className="text-sm sm:text-base text-stone-300 leading-relaxed">
-            Test the responsive mobile prototype Ridge Creative crafts for dining partners. Tap dishes to add to cart, toggle reservation times, and test the 0% commission direct checkout experience.
+          <p className="text-xs sm:text-sm md:text-base text-stone-300 leading-relaxed">
+            Test the responsive mobile prototype Ridge Creative crafts for dining partners. Built to turn scrollers from <strong>Instagram</strong>, <strong>TikTok</strong>, <strong>Facebook</strong>, and <strong>Google Maps</strong> into paying diners. Tap dishes to add to cart, toggle reservation times, and test 0% commission direct checkout.
           </p>
 
           {/* Restaurant Concept Switcher Buttons */}
-          <div className="flex flex-wrap items-center justify-center gap-2 pt-2">
+          <div className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 pt-2">
             {PRESETS.map((preset) => {
               const isSelected = selectedPreset.id === preset.id;
               return (
                 <button
                   key={preset.id}
                   onClick={() => handlePresetChange(preset)}
-                  className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 cursor-pointer border ${
+                  className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 sm:gap-2 cursor-pointer border ${
                     isSelected
                       ? 'bg-amber-400 text-stone-950 border-amber-300 shadow-md scale-105'
                       : 'bg-stone-900/90 text-stone-400 hover:text-white border-stone-800 hover:border-stone-700'
@@ -339,12 +339,12 @@ export const InteractiveSimulator: React.FC<InteractiveSimulatorProps> = ({
         </div>
 
         {/* Prototype Showcase Viewport */}
-        <div className="flex flex-col lg:flex-row items-center justify-center gap-12">
-          {/* Realistic iPhone 16 Pro Style Shell */}
-          <div className="flex flex-col items-center shrink-0">
-            <div className="w-[340px] sm:w-[380px] h-[720px] bg-stone-950 border-[9px] border-stone-800 rounded-[50px] shadow-2xl overflow-hidden relative flex flex-col ring-1 ring-stone-700/80">
+        <div className="flex flex-col lg:flex-row items-center justify-center gap-8 sm:gap-12 w-full">
+          {/* Realistic iPhone 16 Pro Style Shell - Fully Responsive */}
+          <div className="flex flex-col items-center w-full max-w-[340px] sm:max-w-[370px]">
+            <div className="w-full h-[660px] sm:h-[720px] bg-stone-950 border-[7px] sm:border-[9px] border-stone-800 rounded-[42px] sm:rounded-[50px] shadow-2xl overflow-hidden relative flex flex-col ring-1 ring-stone-700/80">
               {/* Dynamic Island & Phone Status Bar */}
-              <div className="h-9 bg-stone-950 px-6 flex items-center justify-between relative shrink-0 z-30 select-none border-b border-stone-900/50">
+              <div className="h-9 bg-stone-950 px-5 sm:px-6 flex items-center justify-between relative shrink-0 z-30 select-none border-b border-stone-900/50">
                 <span className="text-[11px] font-bold text-stone-300">9:41</span>
                 {/* Dynamic Island Pill */}
                 <div className="w-24 h-4 bg-black rounded-full flex items-center justify-between px-2.5">
@@ -687,7 +687,7 @@ export const InteractiveSimulator: React.FC<InteractiveSimulatorProps> = ({
 
                 {/* 4. ABOUT TAB */}
                 {phoneTab === 'info' && (
-                  <div className="p-4 space-y-3.5 text-xs">
+                  <div className="p-4 space-y-3 text-xs">
                     <div className="p-3 rounded-2xl bg-stone-900 border border-stone-800 space-y-2">
                       <div className="flex items-center gap-1.5 text-amber-400 font-bold">
                         <Star className="w-4 h-4 fill-amber-400" />
@@ -698,10 +698,24 @@ export const InteractiveSimulator: React.FC<InteractiveSimulatorProps> = ({
                       </p>
                     </div>
 
-                    <div className="space-y-2 text-[11px] text-stone-400">
+                    {/* 1-Tap Google Maps & Call Integration */}
+                    <div className="grid grid-cols-2 gap-1.5">
+                      <div className="p-2 rounded-xl bg-stone-900 border border-stone-800 text-center space-y-1">
+                        <MapPin className="w-4 h-4 text-emerald-400 mx-auto" />
+                        <span className="block text-[10px] font-bold text-white">Google Maps</span>
+                        <span className="block text-[9px] text-stone-400">1-Tap Directions</span>
+                      </div>
+                      <div className="p-2 rounded-xl bg-stone-900 border border-stone-800 text-center space-y-1">
+                        <Phone className="w-4 h-4 text-amber-400 mx-auto" />
+                        <span className="block text-[10px] font-bold text-white">Direct Call</span>
+                        <span className="block text-[9px] text-stone-400">Host Stand</span>
+                      </div>
+                    </div>
+
+                    <div className="space-y-1.5 text-[11px] text-stone-400 p-2.5 rounded-xl bg-stone-900/60 border border-stone-800/80">
                       <div className="flex items-center gap-2">
                         <MapPin className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-                        <span>{selectedPreset.location}</span>
+                        <span className="truncate">{selectedPreset.location}</span>
                       </div>
                       <div className="flex items-center gap-2">
                         <Phone className="w-3.5 h-3.5 text-amber-400 shrink-0" />
@@ -711,6 +725,13 @@ export const InteractiveSimulator: React.FC<InteractiveSimulatorProps> = ({
                         <Clock className="w-3.5 h-3.5 text-amber-400 shrink-0" />
                         <span>Tue - Sun: 11:30 AM - 10:30 PM</span>
                       </div>
+                    </div>
+
+                    {/* Social profiles presence */}
+                    <div className="flex items-center justify-center gap-2 text-[10px] text-stone-400 pt-1">
+                      <span className="px-2 py-0.5 rounded-full bg-pink-500/10 text-pink-300 border border-pink-500/20">Instagram</span>
+                      <span className="px-2 py-0.5 rounded-full bg-cyan-500/10 text-cyan-300 border border-cyan-500/20">TikTok</span>
+                      <span className="px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-300 border border-blue-500/20">Facebook</span>
                     </div>
                   </div>
                 )}
@@ -893,7 +914,7 @@ export const InteractiveSimulator: React.FC<InteractiveSimulatorProps> = ({
                 <span className="text-xs font-bold text-white">Want this exact prototype for your restaurant?</span>
               </div>
               <p className="text-[11px] text-stone-300">
-                Send us your Instagram handle. We'll generate a custom mobile prototype with your actual menu items, branding, and photos completely free.
+                Send us your Instagram, TikTok, Facebook, or Google Maps link. We'll generate a custom mobile prototype with your actual menu items, branding, and photos completely free.
               </p>
               <div className="flex items-center gap-3">
                 {onRequestMockup && (

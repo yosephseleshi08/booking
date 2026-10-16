@@ -1,3 +1,5 @@
+import { LeadPlatform } from './utils/profileParser';
+
 export type PackageTier = 'pilot' | 'growth' | 'premium';
 export type InquiryType = 'package_claim' | 'free_mockup';
 
@@ -28,6 +30,7 @@ export interface DealInquiry {
   emailOrPhone: string;
   instagramHandle: string;
   packageTier: PackageTier;
+  platform?: LeadPlatform;
   notes?: string;
   createdAt: string;
   status: 'new_claim' | 'contacted' | 'deal_closed';

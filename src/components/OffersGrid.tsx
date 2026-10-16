@@ -10,26 +10,26 @@ interface OffersGridProps {
 
 export const OffersGrid: React.FC<OffersGridProps> = ({ onSelectTier, onRequestMockup }) => {
   return (
-    <section id="offers" className="py-16 sm:py-24 bg-stone-900/60 border-y border-stone-800/80 text-stone-100">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+    <section id="offers" className="py-12 sm:py-20 bg-stone-900/60 border-y border-stone-800/80 text-stone-100 w-full max-w-full overflow-hidden">
+      <div className="max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8 space-y-10 sm:space-y-12">
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto space-y-3">
+        <div className="text-center max-w-3xl mx-auto space-y-2.5">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-amber-500/10 text-amber-300 border border-amber-500/30">
             <Sparkles className="w-3.5 h-3.5 text-amber-400" />
             <span>Transparent Agency Pricing</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white font-serif">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-white font-serif">
             Select Your Dining Partnership Tier
           </h2>
-          <p className="text-sm sm:text-base text-stone-400">
+          <p className="text-xs sm:text-sm md:text-base text-stone-400 max-w-2xl mx-auto">
             All packages include custom mobile-first website design, high-speed cloud hosting, and monthly maintenance so your digital doors never close.
           </p>
         </div>
 
         {/* The 3 Packages Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 items-stretch">
           {/* PACKAGE 1: Founding Partner Pilot ($0 Setup + $99/mo) */}
-          <div className="relative rounded-3xl bg-gradient-to-b from-stone-900 to-stone-950 border-2 border-amber-500/50 p-6 sm:p-8 flex flex-col justify-between shadow-2xl transition-all hover:border-amber-400">
+          <div className="relative rounded-3xl bg-gradient-to-b from-stone-900 to-stone-950 border-2 border-amber-500/50 p-5 sm:p-8 flex flex-col justify-between shadow-2xl transition-all hover:border-amber-400">
             {/* Top Badge */}
             <div className="absolute -top-3.5 left-6 inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-bold bg-amber-500 text-stone-950 shadow-md">
               <Star className="w-3.5 h-3.5 fill-stone-950" />

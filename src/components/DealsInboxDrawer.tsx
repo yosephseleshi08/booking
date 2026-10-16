@@ -243,14 +243,14 @@ If you'd like us to launch it live taking orders with 0% commission, we have our
                     {/* Top Row: Restaurant Name & Type */}
                     <div className="flex items-start justify-between gap-3">
                       <div>
-                        <div className="flex items-center gap-2 flex-wrap">
+                        <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
                           <h4 className="text-base font-bold text-white font-serif">
                             {inq.restaurantName}
                           </h4>
                           {isMockup ? (
                             <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold bg-purple-500/20 text-purple-300 border border-purple-500/30">
                               <Palette className="w-2.5 h-2.5" />
-                              <span>FREE MOCKUP REQUEST</span>
+                              <span>FREE MOCKUP</span>
                             </span>
                           ) : (
                             <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-400 text-stone-950">
@@ -258,17 +258,24 @@ If you'd like us to launch it live taking orders with 0% commission, we have our
                             </span>
                           )}
 
+                          {/* Discovery Platform Badge */}
+                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold bg-stone-800 text-amber-300 border border-stone-700">
+                            {inq.platform === 'google_maps' ? '📍 Google Maps' : inq.platform === 'tiktok' ? '🎵 TikTok' : inq.platform === 'facebook' ? '👥 Facebook' : inq.platform === 'instagram' ? '📸 Instagram' : '🌐 ' + (parsedLead.platformLabel || 'Social/Web')}
+                          </span>
+
                           {inq.status === 'deal_closed' && (
                             <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
                               WON 🎉
                             </span>
                           )}
                         </div>
-                        <div className="text-xs text-stone-400 mt-0.5 flex items-center gap-2">
+                        <div className="text-xs text-stone-400 mt-1 flex items-center gap-2 flex-wrap">
                           {inq.contactName && <span>{inq.contactName}</span>}
                           {inq.contactName && inq.instagramHandle && <span>•</span>}
                           {inq.instagramHandle && (
-                            <span className="text-amber-300 font-medium">{inq.instagramHandle}</span>
+                            <span className="text-amber-300 font-medium font-mono text-[11px] truncate max-w-[220px]">
+                              {inq.instagramHandle}
+                            </span>
                           )}
                         </div>
                       </div>
@@ -332,10 +339,10 @@ If you'd like us to launch it live taking orders with 0% commission, we have our
                           href={igUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-pink-500/10 hover:bg-pink-500/20 text-pink-300 border border-pink-500/30 text-xs font-semibold transition-colors"
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-stone-800 hover:bg-stone-700 text-stone-200 border border-stone-700 text-xs font-semibold transition-colors"
                         >
-                          <Instagram className="w-3.5 h-3.5" />
-                          <span>Open Instagram</span>
+                          <span>{inq.platform === 'google_maps' ? '📍' : inq.platform === 'tiktok' ? '🎵' : inq.platform === 'facebook' ? '👥' : inq.platform === 'instagram' ? '📸' : '🌐'}</span>
+                          <span>Open {parsedLead.platformLabel || 'Profile'}</span>
                           <ExternalLink className="w-3 h-3 opacity-60" />
                         </a>
                       )}

@@ -41,19 +41,44 @@ function generateFallbackLead(input: string, manualName?: string, manualCity?: s
   let cleaned = input.trim();
   let handle = '';
   let inferredName = manualName || '';
+  let platform = 'Social/Discovery';
 
-  // Extract from Instagram URL
-  const igMatch = cleaned.match(/(?:instagram\.com\/|@)([a-zA-Z0-9._]+)/i);
-  if (igMatch && igMatch[1]) {
-    handle = igMatch[1].replace(/\/$/, '');
-    if (!inferredName) {
-      inferredName = handle
-        .replace(/[._]/g, ' ')
-        .split(' ')
-        .map(w => w.charAt(0).toUpperCase() + w.slice(1))
-        .join(' ');
+  // Extract from Google Maps
+  const mapsMatch = cleaned.match(/\/place\/([^/@?]+)/i);
+  if (mapsMatch && mapsMatch[1]) {
+    platform = 'Google Maps';
+    inferredName = decodeURIComponent(mapsMatch[1].replace(/\+/g, ' ')).split(',')[0].trim();
+  } else if (/facebook\.com|fb\.me/i.test(cleaned)) {
+    platform = 'Facebook';
+    const fbMatch = cleaned.match(/(?:facebook\.com|fb\.me)\/([a-zA-Z0-9._-]+)/i);
+    if (fbMatch && fbMatch[1]) {
+      handle = fbMatch[1].replace(/\/$/, '');
+      if (!inferredName) inferredName = handle.replace(/[._-]/g, ' ');
     }
-  } else if (!inferredName) {
+  } else if (/tiktok\.com/i.test(cleaned)) {
+    platform = 'TikTok';
+    const ttMatch = cleaned.match(/tiktok\.com\/@?([a-zA-Z0-9._-]+)/i);
+    if (ttMatch && ttMatch[1]) {
+      handle = ttMatch[1].replace(/\/$/, '');
+      if (!inferredName) inferredName = handle.replace(/[._-]/g, ' ');
+    }
+  } else {
+    // Extract from Instagram URL or @handle
+    const igMatch = cleaned.match(/(?:instagram\.com\/|@)([a-zA-Z0-9._]+)/i);
+    if (igMatch && igMatch[1]) {
+      platform = 'Instagram';
+      handle = igMatch[1].replace(/\/$/, '');
+      if (!inferredName) {
+        inferredName = handle
+          .replace(/[._]/g, ' ')
+          .split(' ')
+          .map(w => w.charAt(0).toUpperCase() + w.slice(1))
+          .join(' ');
+      }
+    }
+  }
+
+  if (!inferredName) {
     // If it's a domain
     const domainMatch = cleaned.match(/https?:\/\/(?:www\.)?([^/]+)/i);
     if (domainMatch && domainMatch[1]) {
@@ -83,18 +108,18 @@ function generateFallbackLead(input: string, manualName?: string, manualCity?: s
       'Missing 1-tap mobile reservation/call button for on-the-go diners looking for a table tonight',
       'Page takes over 3.8 seconds to load on mobile LTE networks'
     ],
-    tailoredPraise: `Love the vibrant culinary energy and the standout presentation of your signature dishes. The local community feedback speaks for itself!`,
+    tailoredPraise: `Love the vibrant culinary energy and standout presentation of your signature dishes. The local community feedback speaks for itself!`,
     urgencyAngle: `I am currently accepting only 3 local restaurants for our $0 setup founding pilot program this month. 2 spots were claimed earlier this week, leaving just 1 spot left.`,
     customPitchBullets: [
       'Zero upfront setup fee for the founding pilot spot ($500 value waived)',
-      'High-converting mobile menu designed to turn hungry Instagram profile visitors into paying diners',
+      `High-converting mobile menu designed to turn hungry ${platform} visitors into paying diners`,
       'Full hosting, instant menu edits, and technical support covered for just $99/month'
     ],
     dmVariations: {
       urgentPilot: `Hey ${inferredName} team! 👋 Stumbled across your page and genuinely love the food presentation.\n\nQuick heads up: I build high-converting websites specifically for local restaurants, and I'm currently taking on my first 3 pilot partners with $0 setup + $99/mo full maintenance (waiving the standard $500 design fee).\n\n2 spots got reserved this week, so I have just 1 spot left for a local spot. Would love to feature ${inferredName} before we close the pilot. Open to taking a quick look at a 2-minute video mockup I made for you?`,
       valueAudit: `Hey ${inferredName}! Huge fan of what you're doing. I noticed when diners tap your link on mobile, the menu is a bit tough to browse quickly, which usually means lost table bookings to nearby competitors.\n\nI run a web studio for food spots and we have 1 remaining Founding Pilot spot left this month ($0 setup + $99/mo maintenance). Mind if I shoot over a free preview of how clean your menu and direct booking could look?`,
       shortCasual: `Hey guys! Loving the vibe at ${inferredName} 🔥\n\nI’m a local restaurant web specialist. Right now I have 1 pilot spot left where I design your full modern website for $0 upfront (just $99/mo hosting & all updates included).\n\nInterested in seeing what a high-converting mobile layout looks like for your menu?`,
-      followUpBump: `Hey! Just bumping this in case it got buried in your DMs. We are locking in our last $0 setup pilot partner by tomorrow evening so we can start launch next week. Let me know if you want me to hold the spot for ${inferredName} before we offer it to the next spot on our waitlist! ⏳`
+      followUpBump: `Hey! Just bumping this in case it got buried in your messages. We are locking in our last $0 setup pilot partner by tomorrow evening so we can start launch next week. Let me know if you want me to hold the spot for ${inferredName} before we offer it to the next spot on our waitlist! ⏳`
     },
     recommendedTier: 'pilot' as const,
     pilotSpotsLeft: 1
@@ -250,24 +275,29 @@ app.get('/api/inquiries', (req, res) => {
 });
 
 app.post('/api/inquire', (req, res) => {
-  const { inquiryType, restaurantName, contactName, emailOrPhone, instagramHandle, packageTier, notes } = req.body;
+  const { inquiryType, restaurantName, contactName, emailOrPhone, instagramHandle, packageTier, platform, notes } = req.body;
   
   const rawInput = (instagramHandle || emailOrPhone || restaurantName || '').trim();
   if (!rawInput) {
-    return res.status(400).json({ error: 'Please enter your username or profile link.' });
+    return res.status(400).json({ error: 'Please enter your username, profile link, or restaurant name.' });
   }
 
   // Derive clean restaurant name from handle/link if restaurantName not explicitly provided
   let cleanName = restaurantName ? restaurantName.trim() : '';
   if (!cleanName) {
-    const stripped = rawInput
-      .replace(/^https?:\/\/(www\.)?(instagram\.com|facebook\.com|tiktok\.com)\//i, '')
-      .replace(/\?.*$/, '')
-      .replace(/\/$/, '')
-      .replace(/^@/, '');
-    cleanName = stripped
-      ? stripped.replace(/[_\.]/g, ' ').replace(/\b\w/g, (c: string) => c.toUpperCase())
-      : 'Restaurant Partner';
+    const mapsMatch = rawInput.match(/\/place\/([^/@?]+)/i);
+    if (mapsMatch && mapsMatch[1]) {
+      cleanName = decodeURIComponent(mapsMatch[1].replace(/\+/g, ' ')).split(',')[0].trim();
+    } else {
+      const stripped = rawInput
+        .replace(/^https?:\/\/(www\.)?(instagram\.com|facebook\.com|tiktok\.com|fb\.me)\//i, '')
+        .replace(/\?.*$/, '')
+        .replace(/\/$/, '')
+        .replace(/^@/, '');
+      cleanName = stripped
+        ? stripped.replace(/[_\.\-]+/g, ' ').replace(/\b\w/g, (c: string) => c.toUpperCase())
+        : 'Restaurant Partner';
+    }
   }
 
   const newInquiry = {
@@ -278,6 +308,7 @@ app.post('/api/inquire', (req, res) => {
     emailOrPhone: emailOrPhone || `Direct: ${rawInput}`,
     instagramHandle: rawInput,
     packageTier: packageTier || 'pilot',
+    platform: platform || 'other',
     notes: notes || '',
     createdAt: new Date().toISOString(),
     status: 'new_claim'

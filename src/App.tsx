@@ -150,7 +150,7 @@ export default function App() {
   const unseenDealsCount = inquiries.filter((i) => i.status === 'new_claim').length;
 
   return (
-    <div className="min-h-screen bg-stone-950 text-stone-100 font-sans selection:bg-amber-400 selection:text-stone-950 flex flex-col">
+    <div className="min-h-screen bg-stone-950 text-stone-100 font-sans selection:bg-amber-400 selection:text-stone-950 flex flex-col w-full max-w-full overflow-x-hidden">
       {/* Top Agency Navigation with Deals Inbox Indicator */}
       <AgencyNav
         onOpenInquiry={handleOpenInquiry}
@@ -161,7 +161,7 @@ export default function App() {
 
       {/* Real-time Deal Alert Toast if someone claims a deal or requests a mockup */}
       {newDealAlert && (
-        <div className="fixed bottom-6 right-6 z-50 max-w-md w-full p-4 rounded-2xl bg-stone-900 border border-amber-500/60 shadow-2xl animate-in slide-in-from-bottom-5 text-stone-100 flex items-start gap-3">
+        <div className="fixed bottom-4 left-3 right-3 sm:left-auto sm:right-6 sm:bottom-6 sm:max-w-md z-50 p-4 rounded-2xl bg-stone-900 border border-amber-500/60 shadow-2xl animate-in slide-in-from-bottom-5 text-stone-100 flex items-start gap-3">
           <div className="p-2 rounded-xl bg-amber-500 text-stone-950 shrink-0 font-bold">
             {newDealAlert.inquiryType === 'free_mockup' ? (
               <Palette className="w-5 h-5" />
@@ -188,7 +188,7 @@ export default function App() {
             </p>
             <p className="text-xs text-stone-300">
               {newDealAlert.inquiryType === 'free_mockup'
-                ? `Free Custom Preview • Instagram: ${newDealAlert.instagramHandle || 'N/A'}`
+                ? `Free Custom Preview • ${newDealAlert.platform ? newDealAlert.platform.toUpperCase() : 'Profile'}: ${newDealAlert.instagramHandle || 'N/A'}`
                 : `Claimed: ${PACKAGES[newDealAlert.packageTier]?.name} • Contact: ${newDealAlert.emailOrPhone}`}
             </p>
             <div className="pt-2 flex items-center gap-2">

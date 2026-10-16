@@ -41,14 +41,14 @@ export const PACKAGES: Record<PackageTier, PackageOffer> = {
     monthlyFee: 99,
     pricingHeader: '$299 setup + $99/month',
     tagline: 'Stop losing 20-30% of your tickets to third-party delivery apps',
-    description: 'A powerful sales engine engineered to convert your Instagram followers and local diners into direct, commission-free pickup orders and instant table reservations.',
+    description: 'A powerful sales engine engineered to convert your Instagram, TikTok, Facebook followers and Google Maps searchers into direct, commission-free pickup orders and instant table reservations.',
     idealFor: 'High-volume dining spots, pizzerias & craft burger bars looking to reclaim delivery margins and increase covers.',
     deliverables: [
       '⚡ 48-Hour Rapid Launch Guarantee (Live & taking orders within 48h)',
       'Full bespoke restaurant web architecture',
       'Direct commission-free online pickup / ordering engine',
       'Integrated table reservation booking widget (OpenTable, Resy, or Direct)',
-      'Custom Instagram / TikTok bio link tree designed for hungry scrollers',
+      'Custom multi-channel bio link hub (Instagram, TikTok, Facebook & Google Maps)',
       'Local search SEO optimization for "best [cuisine] near me" searches',
       'High-resolution food gallery & allergen filter badges'
     ],
